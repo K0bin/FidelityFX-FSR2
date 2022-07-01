@@ -517,6 +517,9 @@ void SetReconstructedDepth(FfxInt32x2 iPxSample, FfxUInt32 uValue)
 void StoreDilatedDepth(FFX_PARAMETER_IN FfxInt32x2 iPxPos, FFX_PARAMETER_IN FfxFloat32 fDepth)
 {
 	//FfxUInt32 uDepth = f32tof16(fDepth);
+#if !FFX_FSR2_OPTION_INVERTED_DEPTH
+	fDepth = 1.0 - fDepth; // maister: Preserve precision as well as we can in FP16.
+#endif
 	imageStore(rw_dilatedDepth, iPxPos, vec4(fDepth, 0.0f, 0.0f, 0.0f));
 }
 #endif
@@ -557,7 +560,15 @@ FfxFloat32x2 SamplePreviousDilatedMotionVector(FfxFloat32x2 fUV)
 #if defined(FSR2_BIND_SRV_DILATED_DEPTH)
 FfxFloat32 LoadDilatedDepth(FfxInt32x2 iPxInput)
 {
-	return texelFetch(r_dilatedDepth, iPxInput, 0).r;
+#if defined(FSR2_BIND_SRV_DILATED_DEPTH)
+	FfxFloat32 d = texelFetch(r_dilatedDepth, iPxInput, 0).r;
+#if !FFX_FSR2_OPTION_INVERTED_DEPTH
+	d = 1.0 - d; // maister: Reconstruct from FP16.
+#endif
+	return d;
+#else
+    return 0.f;
+#endif
 }
 #endif
 
