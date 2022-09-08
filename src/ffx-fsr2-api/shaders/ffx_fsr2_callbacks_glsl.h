@@ -259,7 +259,7 @@ layout (set = 0, binding = 1) uniform sampler s_LinearClamp;
 	layout (set = 1, binding = FSR2_BIND_UAV_LUMA_HISTORY, rgba8)                     uniform image2D    rw_luma_history;
 #endif
 #if defined FSR2_BIND_UAV_UPSCALED_OUTPUT
-	layout (set = 1, binding = FSR2_BIND_UAV_UPSCALED_OUTPUT /* app controlled format */) writeounly uniform image2D rw_upscaled_output;
+	layout (set = 1, binding = FSR2_BIND_UAV_UPSCALED_OUTPUT /* app controlled format */) writeonly uniform image2D rw_upscaled_output;
 #endif
 #if defined FSR2_BIND_UAV_EXPOSURE_MIP_LUMA_CHANGE
 	layout (set = 1, binding = FSR2_BIND_UAV_EXPOSURE_MIP_LUMA_CHANGE, r16f) coherent uniform image2D    rw_img_mip_shading_change;

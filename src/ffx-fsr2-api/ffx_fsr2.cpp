@@ -418,15 +418,16 @@ static FfxErrorCode createPipelineStates(FfxFsr2Context_Private* context)
     FFX_VALIDATE(context->contextDescription.callbacks.fpCreatePipeline(&context->contextDescription.callbacks, FFX_FSR2_PASS_ACCUMULATE_SHARPEN, &pipelineDescription, &context->pipelineAccumulateSharpen));
 
     // for each pipeline: re-route/fix-up IDs based on names
-    patchResourceBindings(&context->pipelineDepthClip);
-    patchResourceBindings(&context->pipelineReconstructPreviousDepth);
-    patchResourceBindings(&context->pipelineLock);
-    patchResourceBindings(&context->pipelineAccumulate);
-    patchResourceBindings(&context->pipelineComputeLuminancePyramid);
-    patchResourceBindings(&context->pipelineAccumulateSharpen);
-    patchResourceBindings(&context->pipelineRCAS);
+    FFX_VALIDATE(patchResourceBindings(&context->pipelineDepthClip));
+    FFX_VALIDATE(patchResourceBindings(&context->pipelineReconstructPreviousDepth));
+    FFX_VALIDATE(patchResourceBindings(&context->pipelineLock));
+    FFX_VALIDATE(patchResourceBindings(&context->pipelineAccumulate));
+    FFX_VALIDATE(patchResourceBindings(&context->pipelineComputeLuminancePyramid));
+    FFX_VALIDATE(patchResourceBindings(&context->pipelineAccumulateSharpen));
+    FFX_VALIDATE(patchResourceBindings(&context->pipelineRCAS));
     patchResourceBindings(&context->pipelineGenerateReactive);
-    patchResourceBindings(&context->pipelineTcrAutogenerate);
+    // This pass is broken.
+    FFX_VALIDATE(patchResourceBindings(&context->pipelineTcrAutogenerate));
 
     return FFX_OK;
 }

@@ -31,11 +31,18 @@
 #define _countof(array) (sizeof(array) / sizeof((array)[0]))
 #include <stdio.h>
 #include <stddef.h>
+#include <cwchar>
 
 template <size_t N>
 static inline void strcpy_s(char (&buf)[N], const char *str)
 {
 	snprintf(buf, N, "%s", str);
+}
+
+template <size_t N>
+static inline void wcscpy_s(wchar_t (&buf)[N], const wchar_t *str)
+{
+	wcsncpy(buf, str, N);
 }
 #endif
 
