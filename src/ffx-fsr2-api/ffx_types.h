@@ -31,7 +31,7 @@
 #define _countof(array) (sizeof(array) / sizeof((array)[0]))
 #include <stdio.h>
 #include <stddef.h>
-#include <cwchar>
+#include <wchar.h>
 
 template <size_t N>
 static inline void strcpy_s(char (&buf)[N], const char *str)
